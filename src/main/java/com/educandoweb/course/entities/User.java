@@ -29,7 +29,7 @@ public class User implements Serializable{
 	private String phone; 
 	private String password;
 	
-	// Permite que o Jackson busque todos o pai daquele filho
+	// Permite que o Jackson busque o pai daquele filho
 	@JsonIgnore
 	//
 	@OneToMany(mappedBy =  "client")
