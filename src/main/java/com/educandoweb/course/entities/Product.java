@@ -8,13 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
 
 @Entity
 @Table(name = "tb_product")
-public class Product implements Serializable{
+public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -24,12 +25,15 @@ public class Product implements Serializable{
 	private String description;
 	private Double price;
 	private String imgUrl;
-	
+
 // Utilizado o Set, pois a relação é de muitos para muitos, porém um produto possui
 // somente uma categoria
-	@Transient
+//	@Transient // comando para que o JPA não reconheça
+	@ManyToMany
+// Faz o relacionamento com a Category, incluindo uma entidade no banco de dados para o relacionamento muitos para muitos
+	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id")) 
 	private Set<Category> categories = new HashSet<>();
-	
+
 	public Product() {
 	}
 
@@ -111,5 +115,4 @@ public class Product implements Serializable{
 		return true;
 	}
 
-	
 }
